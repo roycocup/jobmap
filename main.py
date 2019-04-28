@@ -5,22 +5,23 @@ YOUR_API_KEY = 'AIzaSyD_J6lBRdRymJiZj5XkRShsY82spC8cUmE'
 google_places = GooglePlaces(YOUR_API_KEY)
 
 
-def query(token=False):
+def query(token=False, location='EC1'):
     # If types param contains only 1 item the request to Google Places API
     # will be send as type param to fullfil:
     # http://googlegeodevelopers.blogspot.com.au/2016/02/changes-and-quality-improvements-in_16.html
     # You may prefer to use the text_search API, instead.
     if token != False:
-        query_result = google_places.nearby_search(pagetoken=token, location='EC1C, London, England', keyword='Software', radius=20000) 
+        query_result = google_places.nearby_search(pagetoken=token, location=location + ', London, England', keyword='Software', radius=1000) 
     else:
-        query_result = google_places.nearby_search(location='EC1C, London, England', keyword='Software', radius=20000) #types=[types.TYPE_FOOD]
+        query_result = google_places.nearby_search(location=location + ', London, England', keyword='Software', radius=1000) #types=[types.TYPE_FOOD]
 
 
     # if query_result.has_attributions:
     #     print (query_result.html_attributions)
 
     for place in query_result.places:
-        # Returned places from a query are place summaries.
+        print ('########')
+        
         print (place.name)
         # print (place.geo_location)
         # print (place.place_id)
@@ -33,6 +34,7 @@ def query(token=False):
         print (place.local_phone_number)
         # print (place.international_phone_number)
         print (place.website)
+        
         # print (place.url)
 
         # Getting place photos
@@ -74,4 +76,4 @@ def query(token=False):
 #     # You've passed in parameter values that the Places API doesn't like..
 #     print (error_detail)
 
-query()
+query(location='EC1')
