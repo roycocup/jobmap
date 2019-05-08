@@ -2,4 +2,4 @@ output.txt
 .idea/*
 .vscode/*
 venv
-
+.env
