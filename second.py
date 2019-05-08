@@ -1,6 +1,7 @@
 import requests
 import re
 from bs4 import BeautifulSoup
+import pickle
 
 
 content = None
@@ -13,19 +14,17 @@ regex = 'https?://(?:[-\w.]|(?:%[\da-fA-F]{2}))+'
 
 websites = re.findall(regex, content)
 
-
+requests.packages.urllib3.disable_warnings()
 for website in websites:
     try:
-        website = website.replace('http', 'https', 1)
+        # website = website.replace('http', 'https', 1)
         print("trying " + website)
         resp = requests.get(website, verify=False)
-        html_doc = resp.content()
-        print(html_doc)
+        html_doc = resp.text
+        soup = BeautifulSoup(html_doc, 'html.parser')
+        links = soup.findall('a')
+        print(links)
         quit()
-        # soup = BeautifulSoup(html_doc, 'html.parser')
-        # links = soup.findall('a')
-        # print(links)
-        # quit()
     except:
         print("something wrong with that last one")
     
